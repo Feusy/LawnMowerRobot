@@ -1,6 +1,5 @@
 ﻿using ConsoleUI;
 using ConsoleUI.ViewModels;
-using Controllers;
 
 //Starting the program
 Console.CursorVisible = false;
@@ -17,17 +16,14 @@ draw.DrawHomePosition(rvm.GetStartPosition());
 Console.SetCursorPosition(0, 0);
 Console.ForegroundColor = ConsoleColor.Red;
 Console.BackgroundColor = ConsoleColor.Black;
-Console.WriteLine("Press any key to start the robot");
+//Console.WriteLine("Press any key to start the robot");
 //Console.ReadKey();
 
 //Start process
 
 rvm.Drawing += draw.OnDrawCurrentPos;
 
-for (int i = 0; i < 4; i++)
-{
-    rvm.StartMower();
-}
+rvm.StartMower();
 
 //Finish mower
 rvm.GoHome();

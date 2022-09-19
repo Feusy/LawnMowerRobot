@@ -22,6 +22,7 @@ namespace ConsoleUI.ViewModels
         //Moving Event Subscriber
         public void OnMovingEvent(object sender, CoordinatesEventArgs e)
         {
+            gps.PositionChanged(e.Coordinates);
             OnDrawEvent();
         }
 
@@ -35,9 +36,30 @@ namespace ConsoleUI.ViewModels
         {
             return map.GenerateMap();
         }
+
         public List<int[]> GetObstracles()
         {
-            return sensor.GenerateObstacles();
+            int[] sides = map.GetMapEdges();
+            int margin = sides[0];
+            int width = sides[1];
+            int height = sides[2];
+
+            //Generate edges
+            List<int[]> result = sensor.GenerateObstacles();
+            for (int i = margin; i < width; i++)
+            {
+                result.Add(new int[] { i, margin });
+                result.Add(new int[] { i, height });
+            }
+
+            //Shape sides
+            for (int i = margin; i < height + 1; i++)
+            {
+                result.Add(new int[] { margin, i, });
+                result.Add(new int[] { width, i });
+            }
+
+            return result;
         }
         public int[] GetStartPosition()
         {
@@ -45,14 +67,35 @@ namespace ConsoleUI.ViewModels
         }
         public void StartMower()
         {
-            motor.MoveXPlus(gps.CurrentPosition());
 
+
+            // Move left to right and down while map not ending
+
+            bool move = true;
+            bool bottom = false;
+
+            while (!bottom)
+            {
+                while (move)
+                {
+                    move = motor.MoveXPlus(gps.CurrentPosition(), sensor);
+                }
+
+                motor.MoveYPlus(gps.CurrentPosition(), sensor);
+
+                move = true;
+                while (move)
+                {
+                    move = motor.MoveXMinus(gps.CurrentPosition(), sensor);
+                }
+
+                motor.MoveYPlus(gps.CurrentPosition(), sensor);
+                move = true;
+            }
         }
         public void GoHome()
         {
             motor.GoToStartPosition();
         }
-
-        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Models;
+using Controllers;
 
 namespace Controllers
 {
@@ -16,25 +17,85 @@ namespace Controllers
             }
         }
 
-        public void MoveXPlus(int[] coordinates)
+        public bool MoveXPlus(int[] coordinates ,SensorController sensor)
         {
-            motor.Xcoordinate = coordinates[0]++;
-            motor.Ycoordinate = coordinates[1];
-            OnMovingEvent();
+            coordinates[0]++;
+
+            //Check sensor before moving
+            if (!sensor.ObstacleAhead(coordinates))
+            {
+                motor.Xcoordinate = coordinates[0];
+                motor.Ycoordinate = coordinates[1];
+                OnMovingEvent();
+                return true;
+            }
+            else
+            {
+                coordinates[0]--;
+                return false;
+            }
+            
+            
         }
-        public int MoveXMinus(int x)
+        public bool MoveXMinus(int[] coordinates, SensorController sensor)
         {
-            return x--;
+            coordinates[0]--;
+
+            //Check sensor before moving
+            if (!sensor.ObstacleAhead(coordinates))
+            {
+                motor.Xcoordinate = coordinates[0];
+                motor.Ycoordinate = coordinates[1];
+                OnMovingEvent();
+                return true;
+            }
+            else
+            {
+                coordinates[0]++;
+                return false;
+            }
+
         }
 
-        public int MoveYPlus(int y)
+        public bool MoveYPlus(int[] coordinates, SensorController sensor)
         {
-            return y++;
+         
+            coordinates[1]++;
+
+            //Check sensor before moving
+            if (!sensor.ObstacleAhead(coordinates))
+            {
+                motor.Xcoordinate = coordinates[0];
+                motor.Ycoordinate = coordinates[1];
+                OnMovingEvent();
+                return true;
+            }
+            else
+            {
+                coordinates[1]--;
+                return false;
+            }
+
         }
 
-        public int MoveYMinus(int y)
+        public bool MoveYMinus(int[] coordinates, SensorController sensor)
         {
-            return y--;
+            coordinates[1]--;
+
+            //Check sensor before moving
+            if (!sensor.ObstacleAhead(coordinates))
+            {
+                motor.Xcoordinate = coordinates[0];
+                motor.Ycoordinate = coordinates[1];
+                OnMovingEvent();
+                return true;
+            }
+            else
+            {
+                coordinates[1]++;
+                return false;
+            }
+
         }
         public void DodgeObstacle()
         {

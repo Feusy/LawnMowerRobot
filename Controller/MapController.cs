@@ -8,21 +8,31 @@ namespace Controllers
         public List<int[]> GenerateMap()
         {
             //Simulate map
-            List<int[]> mapCooridnates = new List<int[]>();
-            map.Width = 40;
-            map.Height = 40;
+            map.MapCoordiantes = new List<int[]>();
+            map.Width = 42;
+            map.Height = 42;
             map.Margin = 2;
 
             for (int i = map.Margin; i < map.Width; i++)
             {
                 for (int j = map.Margin; j < map.Height; j++)
                 {
-                    mapCooridnates.Add(new int[] { i, j });
+                    map.MapCoordiantes.Add(new int[] { i, j });
                 }
             }
-
-            return mapCooridnates;
+            map.MoweredArea = map.MapCoordiantes;
+            return map.MapCoordiantes;
         }
-    
+        
+        public int[] GetMapEdges()
+        {
+           //Margin -> Start , Width -> Max , Height -> Max
+            return new int[] {map.Margin, map.Width, map.Height};
+        }
+
+        public List<int[]> MowerArea()
+        {
+            return map.MoweredArea;
+        }
     }
 }

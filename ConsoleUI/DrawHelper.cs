@@ -19,6 +19,7 @@ namespace ConsoleUI
             {
                 Console.SetCursorPosition(item[0], item[1]);
                 Console.ForegroundColor = ConsoleColor.Red;
+                Console.BackgroundColor = ConsoleColor.Yellow;
                 Console.Write("O");
             }
             

@@ -7,6 +7,8 @@ namespace Controllers
         Sensor sensor = new Sensor();
         public List<int[]> GenerateObstacles()
         {
+  
+            //Generate Random Shapes
             sensor.Obstacles = new List<int[]>()
             {
                 new int[] { 4, 7 },
@@ -28,11 +30,11 @@ namespace Controllers
         }
 
         //Sensor check
-        public bool ObstacleAhead(int x, int y)
+        public bool ObstacleAhead(int[] position)
         {
             foreach (var item in sensor.Obstacles)
             {
-                if (item[0] == x && item[1] == y)
+                if (item[0] == position[0] && item[1] == position[1])
                 {
                     return true;
                 }

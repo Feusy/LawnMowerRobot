@@ -24,17 +24,10 @@ namespace Controllers
             }
 
         }
-        public int[] LastPosition()
+        public void PositionChanged(int[] movingPosition)
         {
-            try
-            {
-                return gps.LastPosition;
-            }
-            catch (NullReferenceException e)
-            {
-                Console.Write("GPS connection lost: " + e.Message);
-                return gps.StartPosition;
-            }
+            gps.LastPosition = gps.CurrentPosition;
+            gps.CurrentPosition = movingPosition;
         }
 
        
