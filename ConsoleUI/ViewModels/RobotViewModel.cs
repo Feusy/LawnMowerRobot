@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Controllers;
 
 namespace ConsoleUI.ViewModels
 {
-    internal class RobotViewModel
+    public class RobotViewModel
     {
+        RobotController controller = new RobotController();
+        public void GetMap()
+        {
+            controller.GenerateMap();
+        }
     }
 }

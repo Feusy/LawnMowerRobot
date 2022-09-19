@@ -3,23 +3,23 @@ namespace Models
 {
     public class StepperMotor
     {
-        public void MoveXPlus()
+        public int MoveXPlus(int x)
         {
-          
+            return x++;
         }
-        public void MoveXMinus()
+        public int MoveXMinus(int x)
         {
-
-        }
-
-        public void MoveYPlus()
-        {
-
+            return x--;
         }
 
-        public void MoveYMinus()
+        public int MoveYPlus(int y)
         {
+            return y++;
+        }
 
+        public int MoveYMinus(int y)
+        {
+            return y--;
         }
 
        
