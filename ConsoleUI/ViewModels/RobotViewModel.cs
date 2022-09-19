@@ -4,40 +4,55 @@ namespace ConsoleUI.ViewModels
 {
     public class RobotViewModel
     {
-        public List<int[]>? MoweredCoordinates { get; private set; }
+        GpsController gps = new GpsController();
+        SensorController sensor = new SensorController();
+        MapController map = new MapController();
+        MotorController motor = new MotorController();
 
-        RobotController controller = new RobotController();
+        //Events
+        public event EventHandler<CoordinatesEventArgs>? Drawing;
+        protected virtual void OnDrawEvent()
+        {
+            if (Drawing != null)
+            {
+                Drawing(this, new CoordinatesEventArgs() { Coordinates = gps.CurrentPosition() });
+            }
+        }
+
+        //Moving Event Subscriber
+        public void OnMovingEvent(object sender, CoordinatesEventArgs e)
+        {
+            OnDrawEvent();
+        }
+
+        //ctor
+        public RobotViewModel()
+        {
+            motor.Moving += OnMovingEvent;
+        }
+
         public List<int[]> GetMap()
         {
-            return MoweredCoordinates = controller.GenerateMap();
+            return map.GenerateMap();
         }
         public List<int[]> GetObstracles()
         {
-            return controller.GenerateObstacles();
+            return sensor.GenerateObstacles();
         }
         public int[] GetStartPosition()
         {
-            return controller.GenerateStartPosition();
+            return gps.GenerateStartPosition();
         }
-
         public void StartMower()
         {
-            controller.StartMower();
-        }
+            motor.MoveXPlus(gps.CurrentPosition());
 
-        public int[] CurrentPosition()
-        {
-            return controller.CurrentPosition();
         }
-        public int[] LastPosition()
-        {
-            return controller.LastPosition();
-        }
-
         public void GoHome()
         {
-            controller.GoToStartPosition();
+            motor.GoToStartPosition();
         }
 
+        
     }
 }

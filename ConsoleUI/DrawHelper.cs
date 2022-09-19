@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Controllers;
 
 namespace ConsoleUI
 {
@@ -27,9 +23,9 @@ namespace ConsoleUI
             }
             
         }
-        public void DrawHomePosition(int x, int y)
+        public void DrawHomePosition(int[] coordinates)
         {
-            Console.SetCursorPosition(x, y);
+            Console.SetCursorPosition(coordinates[0], coordinates[1]);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.BackgroundColor = ConsoleColor.DarkRed;
             Console.Write("H");
@@ -48,5 +44,13 @@ namespace ConsoleUI
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("█");
         }
+
+
+        //Event subscribers
+        public void OnDrawCurrentPos(object sender, CoordinatesEventArgs e)
+        {
+            DrawCurrentPosition(e.Coordinates[0], e.Coordinates[1]);
+        }
     }
+
 }

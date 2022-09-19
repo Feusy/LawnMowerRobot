@@ -5,6 +5,6 @@ namespace Models
     {
         public List<int[]>? Obstacles { get; set; }
 
-        //ObstacleAhead event
+      
     }
 }

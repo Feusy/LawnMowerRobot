@@ -1,34 +1,33 @@
 ﻿using ConsoleUI;
 using ConsoleUI.ViewModels;
+using Controllers;
 
 //Starting the program
 Console.CursorVisible = false;
 DrawHelper draw = new DrawHelper();
 RobotViewModel rvm = new RobotViewModel();
 
+
 //Map setup
 draw.DrawMap(rvm.GetMap());
 draw.DrawObstacles(rvm.GetObstracles());
 
 //Robot setup
-draw.DrawHomePosition(rvm.GetStartPosition()[0], rvm.GetStartPosition()[1]);
+draw.DrawHomePosition(rvm.GetStartPosition());
 Console.SetCursorPosition(0, 0);
 Console.ForegroundColor = ConsoleColor.Red;
 Console.BackgroundColor = ConsoleColor.Black;
 Console.WriteLine("Press any key to start the robot");
-Console.ReadKey();
+//Console.ReadKey();
 
 //Start process
-rvm.StartMower();
 
-if (rvm.MoweredCoordinates != null)
+rvm.Drawing += draw.OnDrawCurrentPos;
+
+for (int i = 0; i < 4; i++)
 {
-    while (rvm.MoweredCoordinates.Count > 0)
-    {
-        draw.DrawCurrentPosition(rvm.CurrentPosition()[0], rvm.CurrentPosition()[1]);
-    }
+    rvm.StartMower();
 }
-
 
 //Finish mower
 rvm.GoHome();
@@ -39,4 +38,6 @@ Console.ForegroundColor = ConsoleColor.Red;
 Console.BackgroundColor = ConsoleColor.Black;
 Console.WriteLine("Press any key to exit");
 Console.ReadKey();
+
+
 
