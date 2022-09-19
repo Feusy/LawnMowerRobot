@@ -28,7 +28,7 @@ namespace Controllers
             return mapCooridnates;
         }
 
-        public void GenerateObstacles()
+        public List<int[]> GenerateObstacles()
         {
             sensor.Obstacles = new List<int[]>()
             {
@@ -46,14 +46,43 @@ namespace Controllers
                 new int[] { 7, 34 },
                 new int[] { 7, 33 }
             };
-        }
-        public void GenerateStartPosition()
-        {
 
+            return sensor.Obstacles;
+        }
+        public int[] GenerateStartPosition()
+        {
+            Random rnd = new Random();
+            return gps.StartPosition = new int[] { rnd.Next(3, 39), rnd.Next(3, 32) };
         }
         public void StartMower()
         {
+            
+        }
 
+        public int[] CurrentPosition()
+        {
+            try
+            {
+                return gps.CurrentPosition;
+            }
+            catch (NullReferenceException e)
+            {
+                Console.Write("GPS connection lost: " + e.Message);
+                return gps.StartPosition;
+            }
+            
+        }
+        public int[] LastPosition()
+        {
+            try
+            {
+                return gps.LastPosition;
+            }
+            catch (NullReferenceException e)
+            {
+                Console.Write("GPS connection lost: " + e.Message);
+                return gps.StartPosition;
+            }
         }
         public void DodgeObstacle()
         {
@@ -61,7 +90,7 @@ namespace Controllers
         }
         public void GoToStartPosition()
         {
-
+           
         }
 
 
