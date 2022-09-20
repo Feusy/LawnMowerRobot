@@ -3,7 +3,7 @@
 namespace ConsoleUI.Config
 {
     
-    public interface Visualizer
+    public interface IVisualizer
     {
         public void DrawMap(List<int[]> mapCoordinates);
         public void DrawObstacles(List<int[]> obstracles);

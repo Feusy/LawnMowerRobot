@@ -2,7 +2,7 @@
 
 namespace ConsoleUI.Config
 {
-    public class DrawHelper : Visualizer
+    public class DrawHelper : IVisualizer
     {
         private int[] HomePoint = new int[2];
 
