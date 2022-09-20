@@ -21,12 +21,11 @@ Console.BackgroundColor = ConsoleColor.Black;
 
 //Start process
 
-rvm.Drawing += draw.OnDrawCurrentPos;
+rvm.DrawCurrentPos += draw.OnDrawCurrentPos;
+rvm.DrawCurrentPos += draw.OnDrawLastPost;
 
 rvm.StartMower();
 
-//Finish mower
-rvm.GoHome();
 
 // End of law mower algorithm
 Console.SetCursorPosition(0, 45);

@@ -5,7 +5,7 @@ namespace ConsoleUI
     public class DrawHelper
     {
         public void DrawMap(List<int[]> mapCoordinates)
-        {  
+        {
             foreach (var item in mapCoordinates)
             {
                 Console.SetCursorPosition(item[0], item[1]);
@@ -22,7 +22,7 @@ namespace ConsoleUI
                 Console.BackgroundColor = ConsoleColor.Yellow;
                 Console.Write("O");
             }
-            
+
         }
         public void DrawHomePosition(int[] coordinates)
         {
@@ -37,12 +37,12 @@ namespace ConsoleUI
             Console.ForegroundColor = ConsoleColor.Red;
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.Write("R");
-            Thread.Sleep(20);
+            Thread.Sleep(10);
         }
         public void DrawLastPosition(int x, int y)
         {
             Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.Write("█");
         }
 
@@ -51,6 +51,11 @@ namespace ConsoleUI
         public void OnDrawCurrentPos(object sender, CoordinatesEventArgs e)
         {
             DrawCurrentPosition(e.Coordinates[0], e.Coordinates[1]);
+        }
+
+        public void OnDrawLastPost(object sender, CoordinatesEventArgs e)
+        {
+            DrawLastPosition(e.Coordinates[0], e.Coordinates[1]);
         }
     }
 

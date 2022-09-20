@@ -5,11 +5,12 @@ namespace Controllers
     public class GpsController
     {
         Gps gps = new Gps();
-
+        public int[] HomePosition { get; set; }
+        public int[] LastPosition { get; set; }
         public int[] GenerateStartPosition()
         {
             Random rnd = new Random();
-            return gps.CurrentPosition = gps.StartPosition = new int[] { rnd.Next(3, 39), rnd.Next(3, 32) };
+            return  HomePosition =gps.CurrentPosition = gps.StartPosition = new int[] { rnd.Next(3, 39), rnd.Next(3, 32) };
         }
         public int[] CurrentPosition()
         {
@@ -26,7 +27,7 @@ namespace Controllers
         }
         public void PositionChanged(int[] movingPosition)
         {
-            gps.LastPosition = gps.CurrentPosition;
+            LastPosition = gps.CurrentPosition;
             gps.CurrentPosition = movingPosition;
         }
 

@@ -27,7 +27,7 @@ namespace Controllers
         public int[] GetMapEdges()
         {
            //Margin -> Start , Width -> Max , Height -> Max
-            return new int[] {map.Margin, map.Width, map.Height};
+            return map.MapEdges = new int[] {map.Margin, map.Width, map.Height};
         }
 
         public List<int[]> MowerArea()

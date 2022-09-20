@@ -7,6 +7,7 @@ namespace Controllers
     {
         StepperMotor motor = new StepperMotor();
 
+
         //Moving Event
         public event EventHandler<CoordinatesEventArgs>? Moving;
         protected virtual void OnMovingEvent()
@@ -17,7 +18,7 @@ namespace Controllers
             }
         }
 
-        public bool MoveXPlus(int[] coordinates ,SensorController sensor)
+        public bool MoveXPlus(int[] coordinates, SensorController sensor)
         {
             coordinates[0]++;
 
@@ -27,15 +28,17 @@ namespace Controllers
                 motor.Xcoordinate = coordinates[0];
                 motor.Ycoordinate = coordinates[1];
                 OnMovingEvent();
+                motor.MovedDirection.XDirection = Directions.XPlus;
                 return true;
             }
             else
             {
                 coordinates[0]--;
+                DodgeObstacle(coordinates, sensor);
                 return false;
             }
-            
-            
+
+
         }
         public bool MoveXMinus(int[] coordinates, SensorController sensor)
         {
@@ -47,11 +50,13 @@ namespace Controllers
                 motor.Xcoordinate = coordinates[0];
                 motor.Ycoordinate = coordinates[1];
                 OnMovingEvent();
+                motor.MovedDirection.XDirection = Directions.XMinus;
                 return true;
             }
             else
             {
                 coordinates[0]++;
+                DodgeObstacle(coordinates, sensor);
                 return false;
             }
 
@@ -59,7 +64,7 @@ namespace Controllers
 
         public bool MoveYPlus(int[] coordinates, SensorController sensor)
         {
-         
+
             coordinates[1]++;
 
             //Check sensor before moving
@@ -68,6 +73,7 @@ namespace Controllers
                 motor.Xcoordinate = coordinates[0];
                 motor.Ycoordinate = coordinates[1];
                 OnMovingEvent();
+                motor.MovedDirection.YDirection = Directions.YPlus;
                 return true;
             }
             else
@@ -88,6 +94,7 @@ namespace Controllers
                 motor.Xcoordinate = coordinates[0];
                 motor.Ycoordinate = coordinates[1];
                 OnMovingEvent();
+                motor.MovedDirection.YDirection = Directions.YMinus;
                 return true;
             }
             else
@@ -97,13 +104,76 @@ namespace Controllers
             }
 
         }
-        public void DodgeObstacle()
+        public bool DodgeObstacle(int[] coordinates, SensorController sensor)
         {
-
+            
+            if (motor.MovedDirection.XDirection == Directions.XPlus && motor.MovedDirection.YDirection == Directions.YPlus)
+            {
+                MoveYPlus(coordinates, sensor);
+                MoveXPlus(coordinates, sensor);
+                MoveXPlus(coordinates, sensor);
+                return MoveYMinus(coordinates, sensor);
+            }
+            else if (motor.MovedDirection.XDirection == Directions.XMinus && motor.MovedDirection.YDirection == Directions.YPlus)
+            {
+                MoveYPlus(coordinates, sensor);
+                MoveXMinus(coordinates, sensor);
+                MoveXMinus(coordinates, sensor);
+                return MoveYMinus(coordinates, sensor);
+            }
+            else if (motor.MovedDirection.XDirection == Directions.XPlus && motor.MovedDirection.YDirection == Directions.YMinus)
+            {
+                MoveYMinus(coordinates, sensor);
+                MoveXPlus(coordinates, sensor);
+                MoveXPlus(coordinates, sensor);
+                return MoveYPlus(coordinates, sensor);
+            }
+            else if (motor.MovedDirection.XDirection == Directions.XMinus && motor.MovedDirection.YDirection == Directions.YMinus)
+            {
+                MoveYMinus(coordinates, sensor);
+                MoveXMinus(coordinates, sensor);
+                MoveXMinus(coordinates, sensor);
+                return MoveYPlus(coordinates, sensor);
+            }
+            else
+            {
+                return false;
+            }
         }
-        public void GoToStartPosition()
+        public void GoToStartPosition(int[] currentPosition, int[] homePosition, SensorController sensor)
         {
 
+            //Y direction
+            if (currentPosition[0] > homePosition[0])
+            {
+                while (currentPosition[0] > homePosition[0])
+                {
+                    MoveXMinus(currentPosition, sensor);
+                }
+            }
+            else if (currentPosition[0] < homePosition[0])
+            {
+                while (currentPosition[0] < homePosition[0])
+                {
+                    MoveXPlus(currentPosition, sensor);
+                }
+            }
+
+            //X direction
+            if (currentPosition[1] > homePosition[1])
+            {
+                while (currentPosition[1] > homePosition[1])
+                {
+                    MoveYMinus(currentPosition, sensor);
+                }
+            }
+            else if (currentPosition[1] < homePosition[1])
+            {
+                while (currentPosition[1] < homePosition[1])
+                {
+                    MoveYPlus(currentPosition, sensor);
+                }
+            }
         }
     }
 }

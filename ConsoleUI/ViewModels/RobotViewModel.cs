@@ -10,12 +10,21 @@ namespace ConsoleUI.ViewModels
         MotorController motor = new MotorController();
 
         //Events
-        public event EventHandler<CoordinatesEventArgs>? Drawing;
-        protected virtual void OnDrawEvent()
+        public event EventHandler<CoordinatesEventArgs>? DrawCurrentPos;
+        protected virtual void OnDrawCurremtPos()
         {
-            if (Drawing != null)
+            if (DrawCurrentPos != null)
             {
-                Drawing(this, new CoordinatesEventArgs() { Coordinates = gps.CurrentPosition() });
+                DrawCurrentPos(this, new CoordinatesEventArgs() { Coordinates = gps.CurrentPosition() });
+            }
+        }
+
+        public event EventHandler<CoordinatesEventArgs>? DrawLastPos;
+        protected virtual void OnDrawLastPos()
+        {
+            if (DrawLastPos != null)
+            {
+                DrawLastPos(this, new CoordinatesEventArgs() { Coordinates = gps.LastPosition });
             }
         }
 
@@ -23,7 +32,9 @@ namespace ConsoleUI.ViewModels
         public void OnMovingEvent(object sender, CoordinatesEventArgs e)
         {
             gps.PositionChanged(e.Coordinates);
-            OnDrawEvent();
+            OnDrawLastPos();
+            OnDrawCurremtPos();
+            
         }
 
         //ctor
@@ -67,35 +78,66 @@ namespace ConsoleUI.ViewModels
         }
         public void StartMower()
         {
+            GoLeftToRight();
+            GoHome();
+            GoRigthToLeft();
+            GoHome();
 
 
-            // Move left to right and down while map not ending
-
-            bool move = true;
+        }
+    
+        private void GoLeftToRight()
+        {
             bool bottom = false;
-
+            //Move left to rigth while no map edges
             while (!bottom)
             {
-                while (move)
+                while (gps.CurrentPosition()[0] < map.GetMapEdges()[1] - 1)
                 {
-                    move = motor.MoveXPlus(gps.CurrentPosition(), sensor);
+                    motor.MoveXPlus(gps.CurrentPosition(), sensor);
                 }
-
                 motor.MoveYPlus(gps.CurrentPosition(), sensor);
 
-                move = true;
-                while (move)
+                while (gps.CurrentPosition()[0] > map.GetMapEdges()[0] + 1)
                 {
-                    move = motor.MoveXMinus(gps.CurrentPosition(), sensor);
+                    motor.MoveXMinus(gps.CurrentPosition(), sensor);
                 }
 
-                motor.MoveYPlus(gps.CurrentPosition(), sensor);
-                move = true;
+                if (!motor.MoveYPlus(gps.CurrentPosition(), sensor))
+                {
+                    bottom = true;
+                }
             }
         }
-        public void GoHome()
+
+        private void GoRigthToLeft()
         {
-            motor.GoToStartPosition();
+            bool top = false;
+            //Move right to left while no map edges
+            while (!top)
+            {
+                while (gps.CurrentPosition()[0] > map.GetMapEdges()[0] + 1)
+                {
+                    motor.MoveXMinus(gps.CurrentPosition(), sensor);
+                }
+                motor.MoveYMinus(gps.CurrentPosition(), sensor);
+
+                while (gps.CurrentPosition()[0] < map.GetMapEdges()[1] - 1)
+                {
+                    motor.MoveXPlus(gps.CurrentPosition(), sensor);
+                }
+
+                if (!motor.MoveYMinus(gps.CurrentPosition(), sensor))
+                {
+                    top = true;
+                }
+            }
         }
+        private void GoHome()
+        {
+            motor.GoToStartPosition(gps.CurrentPosition(), gps.HomePosition, sensor);
+        }
+
+
     }
 }
