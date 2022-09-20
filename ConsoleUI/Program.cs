@@ -1,9 +1,10 @@
-﻿using ConsoleUI;
+﻿using ConsoleUI.Config;
 using ConsoleUI.ViewModels;
 
 //Starting the program
 Console.CursorVisible = false;
-DrawHelper draw = new DrawHelper();
+
+Visualizer draw = new DrawHelper();
 RobotViewModel rvm = new RobotViewModel();
 
 //Map setup
@@ -15,8 +16,8 @@ draw.DrawHomePosition(rvm.GetStartPosition());
 Console.SetCursorPosition(0, 0);
 Console.ForegroundColor = ConsoleColor.Red;
 Console.BackgroundColor = ConsoleColor.Black;
-//Console.WriteLine("Press any key to start the robot");
-//Console.ReadKey();
+Console.WriteLine("Press any key to start the robot");
+Console.ReadKey();
 
 //Start process
 

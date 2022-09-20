@@ -81,14 +81,12 @@ namespace ConsoleUI.ViewModels
             GoHome();
             GoRigthToLeft();
             GoHome();
-
-
         }
-    
+
         private void GoLeftToRight()
         {
-            bool bottom = false;
             //Move left to rigth while no map edges
+            bool bottom = false;
             while (!bottom)
             {
                 while (gps.CurrentPosition()[0] < map.GetMapEdges()[1] - 1)
@@ -108,11 +106,10 @@ namespace ConsoleUI.ViewModels
                 }
             }
         }
-
         private void GoRigthToLeft()
         {
-            bool top = false;
             //Move right to left while no map edges
+            bool top = false;
             while (!top)
             {
                 while (gps.CurrentPosition()[0] > map.GetMapEdges()[0] + 1)
@@ -136,7 +133,5 @@ namespace ConsoleUI.ViewModels
         {
             motor.GoToStartPosition(gps.CurrentPosition(), gps.HomePosition, sensor);
         }
-
-
     }
 }

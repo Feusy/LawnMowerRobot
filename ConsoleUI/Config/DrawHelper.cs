@@ -1,8 +1,8 @@
 ﻿using Controllers;
 
-namespace ConsoleUI
+namespace ConsoleUI.Config
 {
-    public class DrawHelper
+    public class DrawHelper : Visualizer
     {
         private int[] HomePoint = new int[2];
 
@@ -28,7 +28,7 @@ namespace ConsoleUI
         }
         public void DrawHomePosition(int[] coordinates)
         {
-           HomePoint = coordinates;
+            HomePoint = coordinates;
             int xcoord = coordinates[0];
             xcoord++;
             Console.SetCursorPosition(xcoord, coordinates[1]);
@@ -44,9 +44,9 @@ namespace ConsoleUI
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
                 Console.Write("R");
-                Thread.Sleep(10);
+                Thread.Sleep(15);
             }
-          
+
         }
         public void DrawLastPosition(int x, int y)
         {
@@ -56,8 +56,8 @@ namespace ConsoleUI
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.Write("█");
             }
-      
-            
+
+
         }
 
 

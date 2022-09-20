@@ -142,7 +142,7 @@ namespace Controllers
         public void GoToStartPosition(int[] currentPosition, int[] homePosition, SensorController sensor)
         {
 
-            //Y direction
+            //Bottom to top loop
             if (currentPosition[0] > homePosition[0])
             {
                 while (currentPosition[0] > homePosition[0])
@@ -158,7 +158,7 @@ namespace Controllers
                 }
             }
 
-            //X direction
+            //Top to bottom loop
             if (currentPosition[1] > homePosition[1])
             {
                 while (currentPosition[1] > homePosition[1])
