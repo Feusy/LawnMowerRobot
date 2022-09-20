@@ -1,11 +1,11 @@
-﻿using ConsoleUI.Config;
-using ConsoleUI.ViewModels;
+﻿using ConsoleUI;
+using ViewModels;
 
 //Starting the program
 Console.CursorVisible = false;
 
 IVisualizer draw = new DrawHelper();
-RobotViewModel rvm = new RobotViewModel();
+IRobot rvm = new RobotViewModel();
 
 //Map setup
 draw.DrawMap(rvm.GetMap());
@@ -21,8 +21,8 @@ Console.ReadKey();
 
 //Start process
 
-rvm.DrawCurrentPos += draw.OnDrawCurrentPos;
-rvm.DrawCurrentPos += draw.OnDrawLastPost;
+rvm.CurrentPosition += draw.OnDrawCurrentPos;
+rvm.CurrentPosition += draw.OnDrawLastPost;
 
 rvm.StartMower();
 

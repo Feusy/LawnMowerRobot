@@ -1,6 +1,7 @@
-﻿using Controllers;
+﻿using ViewModels;
+using Controllers;
 
-namespace ConsoleUI.Config
+namespace ConsoleUI
 {
     public class DrawHelper : IVisualizer
     {

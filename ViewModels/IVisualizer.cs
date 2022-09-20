@@ -1,6 +1,6 @@
 ﻿using Controllers;
 
-namespace ConsoleUI.Config
+namespace ViewModels
 {
     
     public interface IVisualizer
