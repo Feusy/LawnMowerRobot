@@ -4,7 +4,7 @@ using ConsoleUI.ViewModels;
 //Starting the program
 Console.CursorVisible = false;
 
-Visualizer draw = new DrawHelper();
+IVisualizer draw = new DrawHelper();
 RobotViewModel rvm = new RobotViewModel();
 
 //Map setup
