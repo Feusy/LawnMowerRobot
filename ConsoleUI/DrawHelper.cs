@@ -4,6 +4,8 @@ namespace ConsoleUI
 {
     public class DrawHelper
     {
+        private int[] HomePoint = new int[2];
+
         public void DrawMap(List<int[]> mapCoordinates)
         {
             foreach (var item in mapCoordinates)
@@ -26,24 +28,36 @@ namespace ConsoleUI
         }
         public void DrawHomePosition(int[] coordinates)
         {
-            Console.SetCursorPosition(coordinates[0], coordinates[1]);
+           HomePoint = coordinates;
+            int xcoord = coordinates[0];
+            xcoord++;
+            Console.SetCursorPosition(xcoord, coordinates[1]);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.BackgroundColor = ConsoleColor.DarkRed;
             Console.Write("H");
         }
         public void DrawCurrentPosition(int x, int y)
         {
-            Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.Write("R");
-            Thread.Sleep(10);
+            if (HomePoint[0] != x || HomePoint[1] != y)
+            {
+                Console.SetCursorPosition(x, y);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                Console.Write("R");
+                Thread.Sleep(10);
+            }
+          
         }
         public void DrawLastPosition(int x, int y)
         {
-            Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.Write("█");
+            if (HomePoint[0] != x || HomePoint[1] != y)
+            {
+                Console.SetCursorPosition(x, y);
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write("█");
+            }
+      
+            
         }
 
 

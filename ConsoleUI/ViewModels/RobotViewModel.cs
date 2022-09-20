@@ -18,7 +18,6 @@ namespace ConsoleUI.ViewModels
                 DrawCurrentPos(this, new CoordinatesEventArgs() { Coordinates = gps.CurrentPosition() });
             }
         }
-
         public event EventHandler<CoordinatesEventArgs>? DrawLastPos;
         protected virtual void OnDrawLastPos()
         {

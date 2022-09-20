@@ -7,7 +7,6 @@ namespace Controllers
     {
         StepperMotor motor = new StepperMotor();
 
-
         //Moving Event
         public event EventHandler<CoordinatesEventArgs>? Moving;
         protected virtual void OnMovingEvent()

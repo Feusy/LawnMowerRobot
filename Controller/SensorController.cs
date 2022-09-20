@@ -6,8 +6,7 @@ namespace Controllers
     {
         Sensor sensor = new Sensor();
         public List<int[]> GenerateObstacles()
-        {
-  
+        {  
             //Generate Random Shapes
             sensor.Obstacles = new List<int[]>()
             {

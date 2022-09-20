@@ -6,7 +6,6 @@ Console.CursorVisible = false;
 DrawHelper draw = new DrawHelper();
 RobotViewModel rvm = new RobotViewModel();
 
-
 //Map setup
 draw.DrawMap(rvm.GetMap());
 draw.DrawObstacles(rvm.GetObstracles());

@@ -29,8 +29,6 @@ namespace Controllers
         {
             LastPosition = gps.CurrentPosition;
             gps.CurrentPosition = movingPosition;
-        }
-
-       
+        }     
     }
 }
