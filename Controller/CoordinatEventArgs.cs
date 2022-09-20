@@ -1,5 +1,4 @@
-﻿
-namespace Controllers
+﻿namespace Controllers
 {
     public class CoordinatesEventArgs : EventArgs
     {

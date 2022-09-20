@@ -6,7 +6,7 @@ namespace Controllers
     {
         Sensor sensor = new Sensor();
         public List<int[]> GenerateObstacles()
-        {  
+        {
             //Generate Random Shape
             sensor.Obstacles = new List<int[]>()
             {
@@ -14,7 +14,7 @@ namespace Controllers
                 new int[] { 14, 21 },
                 new int[] { 22, 10 },
                 new int[] { 30, 16 },
-                new int[] { 32, 25 },          
+                new int[] { 32, 25 },
                 new int[] { 7, 33 },
                 new int[] {36, 38}
             };
@@ -34,6 +34,5 @@ namespace Controllers
             }
             return false;
         }
-
     }
 }

@@ -23,7 +23,6 @@ namespace Controllers
                 Console.Write("GPS connection lost: " + e.Message);
                 return gps.StartPosition;
             }
-
         }
         public void PositionChanged(int[] movingPosition)
         {

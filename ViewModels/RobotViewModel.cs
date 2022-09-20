@@ -4,50 +4,33 @@ namespace ViewModels;
 
 public class RobotViewModel : IRobot
 {
+    IVisualizer visualizer;
     GpsController gps = new GpsController();
     SensorController sensor = new SensorController();
     MapController map = new MapController();
     MotorController motor = new MotorController();
 
-    //Events
-    public event EventHandler<CoordinatesEventArgs>? CurrentPosition;
-    protected virtual void OnDrawCurremtPos()
-    {
-        if (CurrentPosition != null)
-        {
-            CurrentPosition(this, new CoordinatesEventArgs() { Coordinates = gps.CurrentPosition() });
-        }
-    }
-    public event EventHandler<CoordinatesEventArgs>? LastPosition;
-    protected virtual void OnDrawLastPos()
-    {
-        if (LastPosition != null)
-        {
-            LastPosition(this, new CoordinatesEventArgs() { Coordinates = gps.LastPosition });
-        }
-    }
-
     //Moving Event Subscriber
     public void OnMovingEvent(object sender, CoordinatesEventArgs e)
     {
         gps.PositionChanged(e.Coordinates);
-        OnDrawLastPos();
-        OnDrawCurremtPos();
-        
     }
 
     //ctor
-    public RobotViewModel()
+    public RobotViewModel(IVisualizer visualizer)
     {
+        this.visualizer = visualizer;
         motor.Moving += OnMovingEvent;
+        motor.Moving += visualizer.OnDrawCurrentPos;
+        motor.Moving += visualizer.OnDrawLastPost;
     }
 
-    public List<int[]> GetMap()
+    public void GetMap()
     {
-        return map.GenerateMap();
+        visualizer.DrawMap(map.GenerateMap());
     }
 
-    public List<int[]> GetObstracles()
+    public void GetObstracles()
     {
         int[] sides = map.GetMapEdges();
         int margin = sides[0];
@@ -69,11 +52,11 @@ public class RobotViewModel : IRobot
             result.Add(new int[] { width, i });
         }
 
-        return result;
+        visualizer.DrawObstacles(result);
     }
-    public int[] GetStartPosition()
+    public void GetStartPosition()
     {
-        return gps.GenerateStartPosition();
+        visualizer.DrawHomePosition(gps.GenerateStartPosition());
     }
     public void StartMower()
     {

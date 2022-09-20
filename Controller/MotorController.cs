@@ -134,6 +134,38 @@ namespace Controllers
                 MoveXMinus(coordinates, sensor);
                 return MoveYPlus(coordinates, sensor);
             }
+            else if (motor.MovedDirection.YDirection == Directions.YMinus)
+            {
+                if (MoveXMinus(coordinates, sensor))
+                {
+                    MoveXPlus(coordinates, sensor);
+                    MoveYMinus(coordinates, sensor);
+                    MoveYMinus(coordinates, sensor);
+                    return MoveXMinus(coordinates, sensor);
+                }
+                else
+                {
+                    MoveYMinus(coordinates, sensor);
+                    MoveYMinus(coordinates, sensor);
+                    return MoveXPlus(coordinates, sensor);
+                }
+            }
+            else if (motor.MovedDirection.YDirection == Directions.YPlus)
+            {
+                if (MoveXMinus(coordinates, sensor))
+                {
+                    MoveXPlus(coordinates, sensor);
+                    MoveYPlus(coordinates, sensor);
+                    MoveYPlus(coordinates, sensor);
+                    return MoveXMinus(coordinates, sensor);
+                }
+                else
+                {
+                    MoveYPlus(coordinates, sensor);
+                    MoveYPlus(coordinates, sensor);
+                    return MoveXPlus(coordinates, sensor);
+                }
+            }
             else
             {
                 return false;

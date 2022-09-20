@@ -4,26 +4,16 @@ using ViewModels;
 //Starting the program
 Console.CursorVisible = false;
 
-IVisualizer draw = new DrawHelper();
-IRobot rvm = new RobotViewModel();
+IRobot rvm = new RobotViewModel(new DrawHelper());
 
 //Map setup
-draw.DrawMap(rvm.GetMap());
-draw.DrawObstacles(rvm.GetObstracles());
+rvm.GetMap();
+rvm.GetObstracles();
 
 //Robot setup
-draw.DrawHomePosition(rvm.GetStartPosition());
-Console.SetCursorPosition(0, 0);
-Console.ForegroundColor = ConsoleColor.Red;
-Console.BackgroundColor = ConsoleColor.Black;
-Console.WriteLine("Press any key to start the robot");
-Console.ReadKey();
+rvm.GetStartPosition();
 
 //Start process
-
-rvm.CurrentPosition += draw.OnDrawCurrentPos;
-rvm.CurrentPosition += draw.OnDrawLastPost;
-
 rvm.StartMower();
 
 
