@@ -45,7 +45,7 @@ namespace ConsoleUI
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
                 Console.Write("R");
-                Thread.Sleep(15);
+                Thread.Sleep(20);
             }
 
         }
