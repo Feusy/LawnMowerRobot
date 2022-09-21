@@ -12,6 +12,5 @@ namespace ViewModels
         public void DrawLastPosition(int x, int y);
         public void OnDrawCurrentPos(object sender, CoordinatesEventArgs e);
         public void OnDrawLastPost(object sender, CoordinatesEventArgs e);
-
     }
 }

@@ -23,5 +23,4 @@
         YPlus,
         YMinus
     }
-
 }

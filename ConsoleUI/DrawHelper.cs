@@ -57,8 +57,6 @@ namespace ConsoleUI
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.Write("█");
             }
-
-
         }
 
 

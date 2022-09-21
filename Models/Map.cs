@@ -10,3 +10,4 @@
         public List<int[]>? MoweredArea { get; set; }
     }
 }
+
