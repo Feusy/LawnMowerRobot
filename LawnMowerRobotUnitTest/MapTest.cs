@@ -12,11 +12,12 @@ namespace LawnMowerRobotUnitTest
         {
             //Arrange
             MapController controller = new MapController();
-            
+         
             //Act
+
             List<int[]> IntArrayList = controller.GenerateMap();
 
-            //ASSERT
+            //Assert
             Assert.True(IntArrayList.Count > 0);
         }
 
